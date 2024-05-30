@@ -60,7 +60,17 @@ class VentasController extends Controller
 
     public function show(Venta $venta)
     {
-        return view('ventas.show', compact('venta'));
+        $productos = Producto::all();
+        $categorias = Categoria::all();
+        $clientes = Cliente::all();
+        return view('ventas.show',
+            [
+                'venta' => $venta,
+                'productos' => $productos,
+                'categorias' => $categorias,
+                'clientes' => $clientes
+            ]
+        );
     }
 
     public function edit(Venta $venta)

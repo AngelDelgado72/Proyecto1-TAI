@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class ProductosController extends Controller
 {
@@ -30,7 +32,13 @@ class ProductosController extends Controller
 
     public function show(Producto $producto)
     {
-        return view('productos.show', compact('producto'));
+        $categorias = Categoria::all();
+        return view('productos.show', 
+            [
+                'producto' => $producto,
+                'categorias' => $categorias
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -56,7 +64,13 @@ class ProductosController extends Controller
 
     public function edit(Producto $producto)
     {
-        return view('productos.edit', compact('producto'));
+        $categorias = Categoria::all();
+        return view('productos.edit', 
+            [
+                'producto' => $producto,
+                'categorias' => $categorias
+            ]
+        );
     }
 
     public function update(Request $request, Producto $producto)
@@ -64,7 +78,7 @@ class ProductosController extends Controller
         // validar los datos
         $request->validate([
             'nombre' => 'required',
-            'categoria' => 'required',
+            'categoria_id' => 'required',
             'precio_venta' => 'required',
             'precio_compra' => 'required',
             'fecha_compra' => 'required',

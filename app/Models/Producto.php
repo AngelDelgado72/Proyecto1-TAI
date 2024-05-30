@@ -38,10 +38,5 @@ class Producto extends Model
         return $this->hasMany(Inventario::class);
     }
 
-    public function getFechaCompraAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }
-
 
 }

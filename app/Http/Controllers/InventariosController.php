@@ -57,13 +57,21 @@ class InventariosController extends Controller
 
     public function show(Inventario $inventario)
     {
-        return view('inventarios.show', compact('inventario'));
+        $productos = Producto::all();
+        $categorias = Categoria::all();
+        // dd($inventario);
+        return view('inventarios.show', [
+            'inventario' => $inventario,
+            'productos' => $productos,
+            'categorias' => $categorias
+        ]);
     }
 
     public function edit(Inventario $inventario)
     {
         $productos = Producto::all();
         $categorias = Categoria::all();
+        // dd($inventario);
         return view('inventarios.edit', [
             'inventario' => $inventario,
             'productos' => $productos,

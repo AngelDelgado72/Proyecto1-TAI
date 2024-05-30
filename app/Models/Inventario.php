@@ -26,16 +26,6 @@ class Inventario extends Model
         return $value == 1 ? 'Entrada' : 'Salida';
     }
 
-    public function getFechaEntradaAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }
-
-    public function getFechaSalidaAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }
-
     
 
 }

@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h2 class="text-2xl font-semibold leading-tight mb-4">Editar Entrada de Inventario</h2>
+                    <h2 class="text-2xl font-semibold leading-tight mb-4">Editar entrada de inventario</h2>
                     <form method="POST" action="{{ route('inventarios.update', $inventario->id) }}">
                         @csrf
                         @method('PUT')
@@ -27,7 +27,7 @@
                         </div>
                         <div class="mb-4">
                             <x-input-label for="fecha_entrada" :value="__('Fecha de Entrada')" />
-                            <x-text-input id="fecha_entrada" class="block mt-1 w-full" type="date" name="fecha_entrada" :value="old('fecha_entrada', $inventario->fecha_entrada)" required />
+                            <x-text-input id="fecha_entrada" class="block mt-1 w-full" type="date" name="fecha_entrada" :value="old('fecha_entrada', $inventario->fecha_entrada)" />
                             <x-input-error :messages="$errors->get('fecha_entrada')" class="mt-2" />
                         </div>
                         <div class="mb-4">
