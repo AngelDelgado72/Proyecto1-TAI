@@ -23,6 +23,7 @@ class VentasController extends Controller
         $productos = Producto::all();
         $categorias = Categoria::all();
         $clientes = Cliente::all();
+        
         return view('ventas.create',
             [
                 'productos' => $productos,

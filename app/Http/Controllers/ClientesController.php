@@ -25,9 +25,9 @@ class ClientesController extends Controller
         $request->validate([
             'nombre' => 'required',
             'correo' => 'required | email',
-            'telefono' => 'required | numeric | min:10 | max:10',
+            'telefono' => 'required | numeric | digits:10',
             'direccion' => 'required',
-            'rfc' => 'required | min:13 | max:13',
+            'rfc' => 'required | max:13',
         ]);
 
         $cliente = new Cliente();
@@ -56,9 +56,9 @@ class ClientesController extends Controller
         $request->validate([
             'nombre' => 'required',
             'correo' => 'required | email',
-            'telefono' => 'required | numeric | min:10 | max:10',
+            'telefono' => 'required | numeric | digits:10',
             'direccion' => 'required',
-            'rfc' => 'required | min:13 | max:13',
+            'rfc' => 'required | max:13',
         ]);
 
         $cliente->nombre = $request->input('nombre');

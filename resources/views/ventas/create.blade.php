@@ -15,6 +15,7 @@
                             </select>
                             <x-input-error :messages="$errors->get('producto_id')" class="mt-2" />
                         </div>
+                        
                         <div class="mb-4">
                             <x-input-label for="categoria_id" :value="__('Categoría')" />
                             <select id="categoria_id" name="categoria_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
