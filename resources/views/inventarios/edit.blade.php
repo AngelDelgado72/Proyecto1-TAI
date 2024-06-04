@@ -15,26 +15,7 @@
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('producto_id')" class="mt-2" />
-                        </div>
-                        <div class="mb-4">
-                            <x-input-label for="categoria_id" :value="__('Categoría')" />
-                            <select id="categoria_id" name="categoria_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                @foreach($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}" {{ $inventario->categoria_id == $categoria->id ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('categoria_id')" class="mt-2" />
-                        </div>
-                        <div class="mb-4">
-                            <x-input-label for="fecha_entrada" :value="__('Fecha de Entrada')" />
-                            <x-text-input id="fecha_entrada" class="block mt-1 w-full" type="date" name="fecha_entrada" :value="old('fecha_entrada', $inventario->fecha_entrada)" />
-                            <x-input-error :messages="$errors->get('fecha_entrada')" class="mt-2" />
-                        </div>
-                        <div class="mb-4">
-                            <x-input-label for="fecha_salida" :value="__('Fecha de Salida')" />
-                            <x-text-input id="fecha_salida" class="block mt-1 w-full" type="date" name="fecha_salida" :value="old('fecha_salida', $inventario->fecha_salida)" />
-                            <x-input-error :messages="$errors->get('fecha_salida')" class="mt-2" />
-                        </div>
+                        </div> 
                         <div class="mb-4">
                             <x-input-label for="movimiento" :value="__('Movimiento')" />
                             <select id="movimiento" name="movimiento" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">

@@ -6,6 +6,7 @@ use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Inventario;
 use Illuminate\Http\Request;
 
 class VentasController extends Controller
@@ -20,13 +21,13 @@ class VentasController extends Controller
 
     public function create()
     {
-        $productos = Producto::all();
+        $inventarios = Inventario::where('cantidad', '>', 0)->get();
         $categorias = Categoria::all();
         $clientes = Cliente::all();
         
         return view('ventas.create',
             [
-                'productos' => $productos,
+                'inventarios' => $inventarios,
                 'categorias' => $categorias,
                 'clientes' => $clientes
             ]
@@ -37,25 +38,35 @@ class VentasController extends Controller
     {
         $request->validate([
             'producto_id' => 'required',
-            'categoria_id' => 'required',
             'cliente_id' => 'required',
-            'fecha_venta' => 'required',
-            'subtotal' => 'required',
-            'iva' => 'required',
-            'total' => 'required',
+            'cantidad' => 'required',
         ]);
 
+        // revisa que el producto tenga suficiente cantidad en inventario para la venta, sino retorna un error
+        $inventario = Inventario::where('producto_id', $request->input('producto_id'))->first();
+        if ($inventario->cantidad < $request->input('cantidad')) {
+            return back()->withErrors(['cantidad' => 'No hay suficiente cantidad en inventario para realizar la venta'])->withInput();
+        }else{
+            $inventario->cantidad = $inventario->cantidad - $request->input('cantidad');
+            $inventario->save();
+        }
+
+        $subtotal = $inventario->producto->precio_venta * $request->input('cantidad');
+        $iva = $subtotal * 0.16;
+        $total = $subtotal + $iva;
+
+        // crea la venta
         $venta = new Venta();
         $venta->producto_id = $request->input('producto_id');
-        $venta->categoria_id = $request->input('categoria_id');
         $venta->cliente_id = $request->input('cliente_id');
-        $venta->fecha_venta = $request->input('fecha_venta');
-        $venta->subtotal = $request->input('subtotal');
-        $venta->iva = $request->input('iva');
-        $venta->total = $request->input('total');
+        $venta->fecha_venta = now();
+        $venta->cantidad = $request->input('cantidad');
+        $venta->subtotal = $subtotal;
+        $venta->iva = $iva;
+        $venta->total = $total;
         $venta->save();
 
-        return redirect()->route('ventas.index')->with('success', 'Venta creada exitosamente');
+        return redirect()->route('ventas.index');
 
     }
 
@@ -93,22 +104,39 @@ class VentasController extends Controller
     {
          // validar los datos
          $request->validate([
-            'producto_id' => 'required',
-            'categoria_id' => 'required',
             'cliente_id' => 'required',
-            'fecha_venta' => 'required',
-            'subtotal' => 'required',
-            'iva' => 'required',
-            'total' => 'required',
+            // la cantidad debe ser mayor a 0
+            'cantidad' => 'required|gt:0',
         ]);
 
-        $venta->producto_id = $request->input('producto_id');
-        $venta->categoria_id = $request->input('categoria_id');
+        $inventario = Inventario::where('producto_id', $venta->producto_id)->first();
+
+        // si la cantidad es menor a la original, se debe aumentar la cantidad en inventario 
+        if ($request->input('cantidad') < $venta->cantidad) {
+            $cantidad_aumentar = $venta->cantidad - $request->input('cantidad');
+            $inventario->cantidad = $inventario->cantidad + $cantidad_aumentar;
+            $inventario->save();
+        }else{
+            // si la cantidad es mayor a la original, se debe disminuir la cantidad en inventario y validar que haya suficiente cantidad en inventario
+            $cantidad_disminuir = $request->input('cantidad') - $venta->cantidad;
+            if ($inventario->cantidad < $cantidad_disminuir) {
+                return back()->withErrors(['cantidad' => 'No hay suficiente cantidad en inventario para realizar la venta'])->withInput();
+            }else{
+                $inventario->cantidad = $inventario->cantidad - $cantidad_disminuir;
+                $inventario->save();
+            }
+        }
+
+        $subtotal = $inventario->producto->precio_venta * $request->input('cantidad');
+        $iva = $subtotal * 0.16;
+        $total = $subtotal + $iva;
+
+        // actualiza la venta
         $venta->cliente_id = $request->input('cliente_id');
-        $venta->fecha_venta = $request->input('fecha_venta');
-        $venta->subtotal = $request->input('subtotal');
-        $venta->iva = $request->input('iva');
-        $venta->total = $request->input('total');
+        $venta->cantidad = $request->input('cantidad');
+        $venta->subtotal = $subtotal;
+        $venta->iva = $iva;
+        $venta->total = $total;
         $venta->save();
 
         return redirect()->route('ventas.index')->with('success', 'Venta actualizada exitosamente');

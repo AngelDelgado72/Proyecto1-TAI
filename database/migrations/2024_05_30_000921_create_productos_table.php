@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
             $table->decimal('precio_venta', 8, 2);
             $table->decimal('precio_compra', 8, 2);
-            $table->date('fecha_compra');
             $table->string('color');
             $table->text('descripcion_corta');
             $table->text('descripcion_larga');

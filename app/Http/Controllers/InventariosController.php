@@ -34,20 +34,14 @@ class InventariosController extends Controller
         // validar los datos
         $request->validate([
             'producto_id' => 'required',
-            'categoria_id' => 'required',
-            'fecha_entrada' => 'required',
-            'fecha_salida' => 'required',
-            'movimiento' => 'required',
             'motivo' => 'required',
             'cantidad' => 'required',
         ]);
 
         $inventario = new Inventario();
         $inventario->producto_id = $request->input('producto_id');
-        $inventario->categoria_id = $request->input('categoria_id');
-        $inventario->fecha_entrada = $request->input('fecha_entrada');
-        $inventario->fecha_salida = $request->input('fecha_salida');
-        $inventario->movimiento = $request->input('movimiento');
+        $inventario->fecha_entrada = now();
+        $inventario->movimiento = 'Entrada'; // 'Entrada' o 'Salida
         $inventario->motivo = $request->input('motivo');
         $inventario->cantidad = $request->input('cantidad');
         $inventario->save();
@@ -84,21 +78,28 @@ class InventariosController extends Controller
         // validar los datos
         $request->validate([
             'producto_id' => 'required',
-            'categoria_id' => 'required',
-            'fecha_entrada' => 'required',
-            'fecha_salida' => 'required',
             'movimiento' => 'required',
             'motivo' => 'required',
             'cantidad' => 'required',
         ]);
 
+        $cantidad = Inventario::where('id', $inventario->id)->first()->cantidad;
+        // revisa que el producto tenga suficiente cantidad en inventario para quitarse, sino retorna un error
+        if ($request->input('movimiento') == 'Salida' && $cantidad < $request->input('cantidad')) {
+            return back()->withErrors(['cantidad' => 'No hay suficiente cantidad en inventario para realizar la salida'])->withInput();
+        }
+
+        if ($request->input('movimiento') == 'Salida') {
+            $inventario->fecha_salida = now();
+            $inventario->cantidad = $cantidad - $request->input('cantidad');
+        }else{
+            $inventario->fecha_entrada = now();
+            $inventario->cantidad = $cantidad + $request->input('cantidad');
+        }
+
         $inventario->producto_id = $request->input('producto_id');
-        $inventario->categoria_id = $request->input('categoria_id');
-        $inventario->fecha_entrada = $request->input('fecha_entrada');
-        $inventario->fecha_salida = $request->input('fecha_salida');
         $inventario->movimiento = $request->input('movimiento');
         $inventario->motivo = $request->input('motivo');
-        $inventario->cantidad = $request->input('cantidad');
         $inventario->save();
         return redirect()->route('inventarios.index')->with('success', 'Inventario actualizado exitosamente');
     }

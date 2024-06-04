@@ -16,6 +16,7 @@
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha venta</th>
+                                <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IVA</th>
                                 <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
@@ -26,9 +27,10 @@
                             @foreach ($ventas as $venta)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->producto->nombre}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $venta->categoria->nombre }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $venta->producto->categoria->nombre }}</td>  
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->cliente->nombre }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->fecha_venta }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $venta->cantidad }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->subtotal }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->iva }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $venta->total }}</td>

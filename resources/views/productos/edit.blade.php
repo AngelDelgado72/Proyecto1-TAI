@@ -32,11 +32,6 @@
                             <x-input-error :messages="$errors->get('precio_compra')" class="mt-2" />
                         </div>
                         <div class="mb-4">
-                            <x-input-label for="fecha_compra" :value="__('Fecha de Compra')" />
-                            <x-text-input id="fecha_compra" class="block mt-1 w-full" type="date" name="fecha_compra" :value="old('fecha_compra', $producto->fecha_compra)" />
-                            <x-input-error :messages="$errors->get('fecha_compra')" class="mt-2" />
-                        </div>
-                        <div class="mb-4">
                             <x-input-label for="color" :value="__('Color')" />
                             <x-text-input id="color" class="block mt-1 w-full" type="text" name="color" :value="old('color', $producto->color)" required />
                             <x-input-error :messages="$errors->get('color')" class="mt-2" />

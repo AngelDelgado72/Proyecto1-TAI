@@ -26,7 +26,7 @@
                             @foreach ($inventarios as $inventario)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->producto->nombre }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->categoria->nombre }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->producto->categoria->nombre }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->fecha_entrada }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->fecha_salida }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $inventario->movimiento }}</td>

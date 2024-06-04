@@ -18,7 +18,6 @@
                                 <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio Compra</th>
                                 <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio Venta</th>
                                 <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
-                                <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha Compra</th>
                                 <th class="w-1/6 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Color</th>
                                 <th class="w-1/6 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                             </tr>
@@ -32,7 +31,6 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $producto->precio_compra }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $producto->precio_venta }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $producto->categoria->nombre }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $producto->fecha_compra }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $producto->color }}</td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
