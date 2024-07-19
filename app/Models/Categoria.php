@@ -22,5 +22,5 @@ class Categoria extends Model
     {
         return $this->hasMany(Venta::class);
     }
-
+    
 }

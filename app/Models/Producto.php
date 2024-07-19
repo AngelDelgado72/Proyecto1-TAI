@@ -9,15 +9,7 @@ class Producto extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nombre',
-        'categoria_id',
-        'precio_venta',
-        'precio_compra',
-        'color',
-        'descripcion_corta',
-        'descripcion_larga',
-    ];
+    protected $fillable = ['nombre', 'categoria_id', 'precio_venta', 'precio_compra', 'color', 'descripcion_corta', 'descripcion_larga'];
 
     //relacion uno a muchos
     public function categoria()
@@ -37,5 +29,11 @@ class Producto extends Model
         return $this->hasMany(Inventario::class);
     }
 
-
+    //relacion muchos a muchos
+    public function cotizaciones()
+    {
+        return $this->belongsToMany(Cotizacion::class)->withPivot('cantidad');
+    }
+    
 }
+
