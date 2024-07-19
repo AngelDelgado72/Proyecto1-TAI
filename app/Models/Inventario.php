@@ -21,11 +21,9 @@ class Inventario extends Model
         return $this->belongsTo(Categoria::class);
     }
 
-    public function getMovimientoAttribute($value)
+    public function compra()
     {
-        return $value == 1 ? 'Entrada' : 'Salida';
+        return $this->belongsTo(Compra::class);
     }
-
-    
 
 }
